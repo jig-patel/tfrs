@@ -231,11 +231,13 @@ class ComplianceReportService(object):
 
         if current.supplements:
             is_supplemental = True
+        print(is_supplemental, "234 is_supplemental")
 
         while current.supplements is not None:
             current = current.supplements
             if current.credit_transaction is not None:
                 previous_transactions.append(current.credit_transaction)
+        print(previous_transactions, "240 previous_transactions")
 
         total_previous_reduction = Decimal(0.0)
         total_previous_validation = Decimal(0.0)
@@ -255,40 +257,42 @@ class ComplianceReportService(object):
             raise InvalidStateException()
 
         snapshot = compliance_report.snapshot
+        if int(snapshot['compliance_period']['description']) < 2023:
+            if 'summary' not in snapshot:
+                raise InvalidStateException()
+            if 'lines' not in snapshot['summary']:
+                raise InvalidStateException()
 
-        if 'summary' not in snapshot:
-            raise InvalidStateException()
-        if 'lines' not in snapshot['summary']:
-            raise InvalidStateException()
+            lines = snapshot['summary']['lines']
 
-        lines = snapshot['summary']['lines']
+            desired_net_credit_balance_change = Decimal(0.0)
 
-        desired_net_credit_balance_change = Decimal(0.0)
+            if Decimal(lines['25']) > Decimal(0):
+                desired_net_credit_balance_change = Decimal(lines['25'])
+            elif Decimal(lines['25']) < 0 and Decimal(lines['26']) > Decimal(0):
+                desired_net_credit_balance_change = Decimal(lines['26']) * Decimal(-1.0)
+            print(desired_net_credit_balance_change, "desired_net_credit_balance_change 277$$$$")
+            required_credit_transaction = desired_net_credit_balance_change - \
+                                        (total_previous_validation - total_previous_reduction)
+            print(required_credit_transaction, 'required_credit_transaction--280')
+            if settings.DEVELOPMENT:
+                print('line 25 of current report: {}'.format(lines['25']))
+                print('desired credit balance change: {}'.format(desired_net_credit_balance_change))
+                print('required transaction to effect change: {}'.format(required_credit_transaction))
 
-        if Decimal(lines['25']) > Decimal(0):
-            desired_net_credit_balance_change = Decimal(lines['25'])
-        elif Decimal(lines['25']) < 0 and Decimal(lines['26']) > Decimal(0):
-            desired_net_credit_balance_change = Decimal(lines['26']) * Decimal(-1.0)
-
-        required_credit_transaction = desired_net_credit_balance_change - \
-                                      (total_previous_validation - total_previous_reduction)
-
-        if settings.DEVELOPMENT:
-            print('line 25 of current report: {}'.format(lines['25']))
-            print('desired credit balance change: {}'.format(desired_net_credit_balance_change))
-            print('required transaction to effect change: {}'.format(required_credit_transaction))
-
-        if is_supplemental and Decimal(lines['25']) < 0 and \
-                (Decimal(lines['26']) + Decimal(lines['25'])) > 0:
-            required_credit_transaction = Decimal(lines['26']) + Decimal(lines['25'])
-
-         # Code 26C is used to identify credits that must be refunded to the supplier.
-         # This occurs when our debit position decreases and we have already spent credits. 
-         # In such cases, any excess credits must be returned to the supplier.
-        if is_supplemental and Decimal(lines['26C']) > 0:
-            print("*** DIRECTOR 26C Increase to Credits ***")
-            required_credit_transaction = Decimal(lines['26C'])
-
+            if is_supplemental and Decimal(lines['25']) < 0 and \
+                    (Decimal(lines['26']) + Decimal(lines['25'])) > 0:
+                required_credit_transaction = Decimal(lines['26']) + Decimal(lines['25'])
+            print(required_credit_transaction, 'required_credit_transaction 289')
+            # Code 26C is used to identify credits that must be refunded to the supplier.
+            # This occurs when our debit position decreases and we have already spent credits. 
+            # In such cases, any excess credits must be returned to the supplier.
+            if is_supplemental and Decimal(lines.get('26C', 0)) > 0:
+                print("*** DIRECTOR 26C Increase to Credits ***")
+                required_credit_transaction = Decimal(lines['26C'])
+        else:
+            required_credit_transaction = Decimal(lines['25'])
+        print(required_credit_transaction, "line 299 #####")
         if required_credit_transaction > Decimal(0):
             # do validation for Decimal(lines['25'])
             credit_transaction = CreditTrade(
@@ -323,6 +327,13 @@ class ComplianceReportService(object):
                     update_user=creating_user
                 )
                 credit_transaction.save()
+                print(credit_transaction, "$#$#$#$#$#")
+                print(f"Initiator: {credit_transaction.initiator}")
+                print(f"Respondent: {credit_transaction.respondent}")
+                print(f"Status: {credit_transaction.status}")
+                print(f"Type: {credit_transaction.type}")
+                print(f"Number of Credits: {credit_transaction.number_of_credits}")
+                print(f"Compliance Period: {credit_transaction.compliance_period}")
                 credit_transaction.refresh_from_db()
                 CreditTradeService.approve(credit_transaction)
                 compliance_report.credit_transaction = credit_transaction
