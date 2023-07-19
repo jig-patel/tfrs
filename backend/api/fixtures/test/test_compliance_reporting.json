@@ -29,6 +29,16 @@
     "model": "api.compliancereportworkflowstate",
     "pk": 3
   },
+    {
+    "fields": {
+      "fuel_supplier_status": "Draft",
+      "analyst_status": "Unreviewed",
+      "director_status": "Unreviewed",
+      "manager_status": "Unreviewed"
+    },
+    "model": "api.compliancereportworkflowstate",
+    "pk": 4
+  },
   {
     "fields": {
       "status": 1,
@@ -91,6 +101,27 @@
     },
     "model": "api.compliancereport",
     "pk": 3
+  },
+  {
+    "fields": {
+      "status": 4,
+      "type": [
+        "Compliance Report"
+      ],
+      "organization": [
+        "Test Org 1"
+      ],
+      "compliance_period": [
+        "2023"
+      ],
+      "create_timestamp": "2019-01-01",
+      "update_timestamp": "2019-01-01",
+      "root_report": 4,
+      "latest_report": 4,
+      "traversal": 0
+    },
+    "model": "api.compliancereport",
+    "pk": 4
   },
   {
     "fields": {

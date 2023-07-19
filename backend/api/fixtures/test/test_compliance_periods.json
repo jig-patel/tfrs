@@ -128,15 +128,5 @@
     },
     "model": "api.complianceperiod",
     "pk": "13"
-  },
-  {
-    "fields": {
-        "description": "2023",
-        "display_order": "14",
-        "effective_date": "2023-01-01",
-        "expiration_date": "2023-12-31"
-    },
-    "model": "api.complianceperiod",
-    "pk": "14"
   }
 ]

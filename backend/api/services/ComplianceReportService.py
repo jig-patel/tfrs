@@ -231,8 +231,6 @@ class ComplianceReportService(object):
 
         if current.supplements:
             is_supplemental = True
-        print(is_supplemental, "234 is_supplemental")
-
         while current.supplements is not None:
             current = current.supplements
             if current.credit_transaction is not None:
@@ -257,13 +255,14 @@ class ComplianceReportService(object):
             raise InvalidStateException()
 
         snapshot = compliance_report.snapshot
-        if int(snapshot['compliance_period']['description']) < 2023:
-            if 'summary' not in snapshot:
-                raise InvalidStateException()
-            if 'lines' not in snapshot['summary']:
-                raise InvalidStateException()
 
-            lines = snapshot['summary']['lines']
+        if 'summary' not in snapshot:
+            raise InvalidStateException()
+        if 'lines' not in snapshot['summary']:
+            raise InvalidStateException()
+
+        lines = snapshot['summary']['lines']
+        if int(snapshot['compliance_period']['description']) < 2023:
 
             desired_net_credit_balance_change = Decimal(0.0)
 

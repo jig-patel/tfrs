@@ -31,7 +31,8 @@ class TestComplianceReportDirectorApproval(BaseTestCase):
         'test/test_energy_densities.json',
         'test/test_energy_effectiveness_ratio.json',
         'test/test_petroleum_carbon_intensities.json',
-        'test/test_transaction_types.json'
+        'test/test_transaction_types.json',
+        'test/test_compliance_report_director_approval.json'
     ]
 
     def _create_compliance_report(self, report_type="Compliance Report"):
@@ -54,7 +55,7 @@ class TestComplianceReportDirectorApproval(BaseTestCase):
         return report.id
 
     def test_compliance_submit_success(self):
-        sid = self._create_supplemental_report()
+        sid = self._create_compliance_report()
         # submit supplemental #1 failure, needs supplemental note
         payload = {
             'status': {'fuelSupplierStatus': 'Submitted'}

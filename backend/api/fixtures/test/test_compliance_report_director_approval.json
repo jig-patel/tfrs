@@ -1,0 +1,215 @@
+[
+    {
+        "model": "api.provisionoftheact",
+        "pk": 4,
+        "fields": {
+            "create_timestamp": "2019-06-18T17:31:46.645Z",
+            "create_user": null,
+            "update_timestamp": "2019-06-18T17:31:46.645Z",
+            "update_user": null,
+            "display_order": 4,
+            "effective_date": "2017-01-01",
+            "expiration_date": null,
+            "provision": "Section 6 (5) (d) (i)",
+            "description": "Default Carbon Intensity Value"
+        }
+    },
+    {
+        "model": "api.approvedfuel",
+        "pk": 2,
+        "fields": {
+            "create_timestamp": "2019-03-07T23:55:01.234Z",
+            "create_user": null,
+            "update_timestamp": "2019-03-07T23:55:01.234Z",
+            "update_user": null,
+            "effective_date": "2017-01-01",
+            "expiration_date": null,
+            "name": "CNG",
+            "description": "Compressed natural gas",
+            "credit_calculation_only": false,
+            "unit_of_measure": 4,
+            "is_partially_renewable": false
+        }
+    },
+    {
+        "model": "api.credittrade",
+        "pk": 1049,
+        "fields": {
+            "create_timestamp": "2023-06-14T16:52:48.484Z",
+            "create_user": 7,
+            "update_timestamp": "2023-06-14T16:52:48.583Z",
+            "update_user": 7,
+            "status": 7,
+            "initiator": 1,
+            "respondent": 102,
+            "type": 4,
+            "number_of_credits": 6169,
+            "fair_market_value_per_credit": "0.00",
+            "zero_reason": null,
+            "trade_effective_date": null,
+            "compliance_period": 13,
+            "is_rescinded": false
+        }
+    },
+    {
+        "model": "api.compliancereporttype",
+        "pk": 1,
+        "fields": {
+            "create_timestamp": "2019-10-21T19:38:08.806Z",
+            "create_user": null,
+            "update_timestamp": "2019-10-21T19:38:10.133Z",
+            "update_user": null,
+            "display_order": 10,
+            "effective_date": null,
+            "expiration_date": null,
+            "the_type": "Compliance Report",
+            "description": "Annual Compliance Report"
+        }
+    },
+    {
+        "model": "api.compliancereportworkflowstate",
+        "pk": 2319,
+        "fields": {
+            "create_timestamp": "2023-06-14T16:11:44.138Z",
+            "create_user": null,
+            "update_timestamp": "2023-06-14T16:52:48.478Z",
+            "update_user": null,
+            "fuel_supplier_status": "Submitted",
+            "analyst_status": "Recommended",
+            "manager_status": "Recommended",
+            "director_status": "Accepted"
+        }
+    },
+    {
+        "model": "api.compliancereportworkflowstate",
+        "pk": 2330,
+        "fields": {
+            "create_timestamp": "2023-06-14T16:53:15.695Z",
+            "create_user": null,
+            "update_timestamp": "2023-06-14T16:54:12.412Z",
+            "update_user": null,
+            "fuel_supplier_status": "Submitted",
+            "analyst_status": "Recommended",
+            "manager_status": "Unreviewed",
+            "director_status": "Unreviewed"
+        }
+    },
+    {
+        "model": "api.schedulesummary",
+        "pk": 1161,
+        "fields": {
+            "gasoline_class_retained": "0.00",
+            "gasoline_class_deferred": "0.00",
+            "gasoline_class_previously_retained": "0.00",
+            "gasoline_class_obligation": "0.00",
+            "diesel_class_retained": "0.00",
+            "diesel_class_deferred": "0.00",
+            "diesel_class_previously_retained": "0.00",
+            "diesel_class_obligation": "0.00",
+            "credits_offset": 6169,
+            "credits_offset_a": 0,
+            "credits_offset_b": 0,
+            "credits_offset_c": 0
+        }
+    },
+    {
+        "model": "api.schedulesummary",
+        "pk": 1165,
+        "fields": {
+            "gasoline_class_retained": "0.00",
+            "gasoline_class_deferred": "0.00",
+            "gasoline_class_previously_retained": "0.00",
+            "gasoline_class_obligation": "0.00",
+            "diesel_class_retained": "0.00",
+            "diesel_class_deferred": "0.00",
+            "diesel_class_previously_retained": "0.00",
+            "diesel_class_obligation": "0.00",
+            "credits_offset": 5738,
+            "credits_offset_a": 6169,
+            "credits_offset_b": 0,
+            "credits_offset_c": 431
+        }
+    },
+    {
+        "model": "api.complianceperiod",
+        "pk": 13,
+        "fields": {
+            "create_timestamp": "2019-04-17T20:58:25.497Z",
+            "create_user": null,
+            "update_timestamp": "2019-04-17T20:58:25.497Z",
+            "update_user": null,
+            "display_order": 13,
+            "effective_date": "2023-01-01",
+            "expiration_date": "2023-12-31",
+            "description": "2023"
+        }
+    },
+    {
+        "model": "api.organization",
+        "pk": 102,
+        "fields": {
+            "create_timestamp": "2023-06-14T15:59:40.184Z",
+            "create_user": null,
+            "update_timestamp": "2023-06-14T15:59:40.184Z",
+            "update_user": null,
+            "name": "Strickland Propane",
+            "status": 1,
+            "actions_type": 1,
+            "type": 2
+        }
+    },
+    {
+        "model": "api.compliancereport",
+        "pk": 1020,
+        "fields": {
+            "create_timestamp": "2023-06-14T16:11:44.140Z",
+            "create_user": null,
+            "update_timestamp": "2023-06-14T16:52:48.587Z",
+            "update_user": null,
+            "status": 2319,
+            "type": 1,
+            "organization": 102,
+            "credit_transaction": 1049,
+            "compliance_period": 13,
+            "schedule_a": null,
+            "schedule_b": null,
+            "schedule_c": null,
+            "schedule_d": null,
+            "summary": 1161,
+            "exclusion_agreement": null,
+            "supplements": null,
+            "root_report": 1020,
+            "latest_report": 1020,
+            "traversal": 1,
+            "nickname": null,
+            "supplemental_note": null
+        }
+    },
+    {
+        "model": "api.compliancereport",
+        "pk": 1023,
+        "fields": {
+            "create_timestamp": "2023-06-14T16:53:15.696Z",
+            "create_user": null,
+            "update_timestamp": "2023-06-14T16:54:13.221Z",
+            "update_user": null,
+            "status": 2330,
+            "type": 1,
+            "organization": 102,
+            "credit_transaction": null,
+            "compliance_period": 13,
+            "schedule_a": null,
+            "schedule_b": null,
+            "schedule_c": null,
+            "schedule_d": null,
+            "summary": 1165,
+            "exclusion_agreement": null,
+            "supplements": 1020,
+            "root_report": 1020,
+            "latest_report": 1020,
+            "traversal": 1,
+            "nickname": null,
+            "supplemental_note": "EV charging added per discussion"
+        }
+    }
+]
